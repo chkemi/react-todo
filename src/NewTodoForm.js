@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import shortid from 'shortid';
+import './NewTodoForm.css';
 
 class NewTodoForm extends Component {
     constructor(props) {
@@ -20,7 +21,12 @@ class NewTodoForm extends Component {
 
     handleSubmit(e) {
         e.preventDefault();
-        this.props.createTodo({...this.state, id: shortid.generate()});
+        
+        if (!this.state.task) {
+            return;
+        }
+
+        this.props.createTodo({...this.state, id: shortid.generate(), completed: false});
         this.setState({
             task: ''
         })
@@ -28,7 +34,7 @@ class NewTodoForm extends Component {
 
     render() { 
         return ( 
-        <form onSubmit={this.handleSubmit}>
+        <form className='NewTodoForm' onSubmit={this.handleSubmit}>
             <label htmlFor='task'>New Todo</label>
             <input type='text'
             placeholder='New Todo'
